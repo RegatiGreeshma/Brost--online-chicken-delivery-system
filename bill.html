@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - Brost</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bill.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/Brost Logo.jpeg') }}" alt="Brost Logo" class="image">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('main_page') }}"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="{{ url_for('menu_page') }}"><i class="fa-solid fa-utensils"></i> Menu</a></li>
+                <li><a href="{{ url_for('cart_page') }}"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="bill-container">
+        <header>
+            <h1>Brost</h1>
+            <p>Invoice</p>
+        </header>
+
+        <section class="order-details">
+            <p><strong>Order ID:</strong> {{ order.id }}</p>
+            <p><strong>Status:</strong> {{ order.status }}</p>
+            <p><strong>Date:</strong> {{ order.created_at.strftime('%d %b %Y, %I:%M %p') if order.created_at else 'N/A' }}</p>
+        </section>
+
+        <h3>Items Ordered</h3>
+        <table>
+            <tr>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Subtotal</th>
+            </tr>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.item_name }}</td>
+                <td>{{ item.quantity }}kg</td>
+                <td>₹{{ item.price }}</td>
+                <td>₹{{ item.subtotal }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <section class="payment-summary">
+            <h3>Payment Summary</h3>
+            <table class="summary-table">
+                <tr>
+                    <td><strong>Subtotal:</strong></td>
+                    <td>₹{{ "%.2f"|format(order.total_price) }}</td>
+                </tr>
+                {% if order.discount_amount and order.discount_amount > 0 %}
+                <tr>
+                    <td><strong>Discount{% if order.discount_code %} ({{ order.discount_code }}){% endif %}:</strong></td>
+                    <td>-₹{{ "%.2f"|format(order.discount_amount) }}</td>
+                </tr>
+                {% endif %}
+                <tr class="total-row">
+                    <td><strong>Total Amount:</strong></td>
+                    <td>₹{{ "%.2f"|format(order.final_amount) }}</td>
+                </tr>
+            </table>
+        </section>
+        
+
+        <div class="bill-footer">
+            <button onclick="window.print()">Print Invoice</button>
+            <a href="{{ url_for('main_page') }}" class="home-btn">Go Home</a>
+        </div>
+    </div>
+    <!-- Social Media Section -->
+<!-- Footer Section -->
+<footer>
+    <div class="footer-container">
+        <!-- About Section -->
+        <div class="footer-about">
+            <h3>About Brost</h3>
+            <p>Brost is your go-to online meat delivery service, ensuring fresh and high-quality cuts at your doorstep within minutes. We deliver mutton, chicken, seafood, eggs, and ready-to-cook meats with utmost hygiene and care.</p>
+        </div>
+  
+        <!-- Quick Links -->
+        <div class="footer-links">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="{{ url_for('main_page') }}">Home</a></li>
+                <li><a href="{{ url_for('menu_page') }}">Menu</a></li>
+                <li><a href="{{ url_for('login_page') }}">Login</a></li>
+                <li><a href="{{ url_for('cart_page') }}">Cart</a></li>
+                
+            </ul>
+        </div>
+  
+        <!-- Social Media -->
+        <div class="footer-social">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+  
+    <!-- Copyright -->
+    <div class="footer-bottom">
+        <p>&copy; 2025 Brost. All Rights Reserved. | Designed with ❤️ by Brost Team</p>
+    </div>
+  </footer>
+</body>
+</html>

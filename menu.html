@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brost - Menu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/Brost Logo.jpeg') }}" alt="Brost Logo" class="image">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('main_page') }}"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="{{ url_for('menu_page') }}"><i class="fa-solid fa-utensils"></i> Menu</a></li>
+                <li><a href="{{ url_for('cart_page') }}"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Our Menu</h2>
+        <div class="menu">
+            <div class="menu-item">
+                <img src="{{ url_for('static', filename='images/boneless.jpeg') }}" alt="Chicken Breast">
+                <h3>Boneless Chicken</h3>
+                <p>Fresh and tender chicken breast.</p>
+                <div class="rating" data-rating="4"></div>
+                <p><strong>₹450/lkg</strong></p>
+                <form action="{{ url_for('cart_page') }}" method="POST">
+                    <input type="hidden" name="item" value="Chicken Breast">
+                    <input type="hidden" name="price" value="10.99">
+                    <div class="quantity-section">
+                        <label for="quantity-boneless">Quantity:</label>
+                        <input type="number" id="quantity-boneless" class="quantity-input" value="1" min="1" required>
+                        <button type="button" onclick="addToCart('Boneless Chicken', 450, 'boneless.jpeg', this)">Add to Cart</button>
+                    </div>
+                </form>
+            </div>
+            <div class="menu-item">
+                <img src="{{ url_for('static', filename='images/wholechi.jpeg') }}" alt=" ">
+                <h3>Dressed</h3>
+                <p>Juicy and flavorful chicken chops.</p>
+                <div class="rating" data-rating="5"></div>
+                <p><strong>₹220/1kg</strong></p>
+                <form action="{{ url_for('cart_page') }}" method="POST">
+                    <input type="hidden" name="item" value="Chicken Breast">
+                    <input type="hidden" name="price" value="10.99">
+                    <label for="quantity-dressed">Quantity:</label>
+                    <input type="number" id="quantity-dressed" name="quantity" value="1" min="1" required>
+                    <button type="button" onclick="addToCart('Dressed', 220, 'wholechi.jpeg', this)">Add to Cart</button>
+                </form>
+            </div>
+            <div class="menu-item">
+                <img src="{{ url_for('static', filename='images/withskin.jpeg') }}" alt="Salmon Fillet">
+                <h3>SkinLess</h3>
+                <p>Fresh Atlantic chicken fillet.</p>
+                <div class="rating" data-rating="4"></div>
+                <p><strong>₹250/lkg</strong></p>
+                <form action="{{ url_for('cart_page') }}" method="POST">
+                    <input type="hidden" name="item" value="Chicken Breast">
+                    <input type="hidden" name="price" value="10.99">
+                    <label for="quantity-skinless">Quantity:</label>
+                    <input type="number" id="quantity-skinless" name="quantity" value="1" min="1" required>
+                    <button type="button" onclick="addToCart('SkinLess', 250, 'withskin.jpeg', this)">Add to Cart</button>
+                </form>
+            </div>
+            <div class="menu-item">
+                <img src="{{ url_for('static', filename='images/liver.jpeg') }}" alt="Chicken Breast">
+                <h3>Liver</h3>
+                <p>Rich in iron and flavor.</p>
+                <div class="rating" data-rating="3"></div>
+                <p><strong>₹120/lkg</strong></p>
+                <form action="{{ url_for('cart_page') }}" method="POST">
+                    <input type="hidden" name="item" value="Chicken Breast">
+                    <input type="hidden" name="price" value="10.99">
+                    <label for="quantity-liver">Quantity:</label>
+                    <input type="number" id="quantity-liver" name="quantity" value="1" min="1" required>
+                    <button type="button" onclick="addToCart('Liver', 120, 'liver.jpeg', this)">Add to Cart</button>
+                </form>
+            </div>
+            <div class="menu-item">
+                <img src="{{ url_for('static', filename='images/gizzzard.jpeg') }}"alt="Lamb Chops">
+                <h3>Gizzzard</h3>
+                <p>Delicious and nutrient-rich chicken gizzard.</p>
+                <div class="rating" data-rating="3"></div>
+                <p><strong>₹120/lkg</strong></p>
+                <form action="{{ url_for('cart_page') }}" method="POST">
+                    <input type="hidden" name="item" value="Chicken Breast">
+                    <input type="hidden" name="price" value="10.99">
+                    <label for="quantity-gizzard">Quantity:</label>
+                    <input type="number" id="quantity-gizzard" name="quantity" value="1" min="1" required>
+                    <button type="button" onclick="addToCart('Gizzzard', 120, 'gizzzard.jpeg', this)">Add to Cart</button>
+                </form>
+            </div>
+            <div class="menu-item">
+                <img src="{{ url_for('static', filename='images/legpiece.jpeg') }}" alt="Salmon Fillet">
+                <h3>Leg piece </h3>
+                <p>Tender and juicy chicken leg pieces</p>
+                <div class="rating" data-rating="4"></div>
+                <p><strong>₹360/lkg</strong></p>
+                <form action="{{ url_for('cart_page') }}" method="POST">
+                    <input type="hidden" name="item" value="Chicken Breast">
+                    <input type="hidden" name="price" value="10.99">
+                    <label for="quantity-legpiece">Quantity:</label>
+                    <input type="number" id="quantity-legpiece" name="quantity" value="1" min="1" required>
+                    <button type="button" onclick="addToCart('Leg piece', 360, 'legpiece.jpeg', this)">Add to Cart</button>
+                </form>
+            </div>
+            <div class="menu-item">
+                <img src="{{ url_for('static', filename='images/lollipops.jpeg') }}" alt="Chicken Breast">
+                <h3>Lollipops</h3>
+                <p>Succulent and meaty chicken lollipops</p>
+                <div class="rating" data-rating="3"></div>
+                <p><strong>₹320/lkg</strong></p>
+                <form action="{{ url_for('cart_page') }}" method="POST">
+                    <input type="hidden" name="item" value="Chicken Breast">
+                    <input type="hidden" name="price" value="10.99">
+                    <label for="quantity-lollipops">Quantity:</label>
+                    <input type="number" id="quantity-lollipops" name="quantity" value="1" min="1" required>
+                    <button type="button" onclick="addToCart('Lollipops', 320, 'lollipops.jpeg', this)">Add to Cart</button>
+                </form>
+            </div>
+            <div class="menu-item">
+                <img src="{{ url_for('static', filename='images/wegg.jpeg') }}" alt="Lamb Chops">
+                <h3>Eggs</h3>
+                <p>Farm-fresh eggs, packed with protein and taste, delivered swiftly for your daily nutrition!</p>
+                <div class="rating" data-rating="2"></div>
+                <p><strong>₹60/l2 </strong></p>
+                <form action="{{ url_for('cart_page') }}" method="POST">
+                    <input type="hidden" name="item" value="Chicken Breast">
+                    <input type="hidden" name="price" value="10.99">
+                    <label for="quantity-eggs">Quantity:</label>
+                    <input type="number" id="quantity-eggs" name="quantity" value="1" min="1" required>
+                    <button type="button" onclick="addToCart('Eggs', 60, 'wegg.jpeg', this)">Add to Cart</button>
+                </form>
+            </div>
+            <div class="menu-item">
+                <img src="{{ url_for('static', filename='images/begg.jpeg') }}" alt="Salmon Fillet">
+                <h3>Omega Eggs</h3>
+                <p>Nutrient-rich Omega eggs, enriched with essential fatty acids for a healthier you</p>
+                <div class="rating" data-rating="4"></div>
+                <p><strong>₹100/l2</strong></p>
+                <form action="{{ url_for('cart_page') }}" method="POST">
+                    <input type="hidden" name="item" value="Chicken Breast">
+                    <input type="hidden" name="price" value="10.99">
+                    <label for="quantity-omega">Quantity:</label>
+                    <input type="number" id="quantity-omega" name="quantity" value="1" min="1" required>
+                    <button type="button" onclick="addToCart('Omega Eggs', 100, 'begg.jpeg', this)">Add to Cart</button>                           
+                </form>
+            </div>
+            <div class="menu-item">
+                <img src="{{ url_for('static', filename='images/legpiecewithbreast.jpeg') }}" alt="Salmon Fillet">
+                <h3>Legs and Breast</h3>
+                <p>A combination of tender chicken breast and juicy leg pieces, ideal for roasting, grilling, or slow cooking.</p>
+                <div class="rating" data-rating="5"></div>
+                <p><strong>₹300/1kg</strong></p>
+                <form action="{{ url_for('cart_page') }}" method="POST">
+                    <input type="hidden" name="item" value="Chicken Breast">
+                    <input type="hidden" name="price" value="10.99">
+                    <label for="quantity-legs and breast">Quantity:</label>
+                    <input type="number" id="quantity-omega" name="quantity" value="1" min="1" required>
+                    <button type="button" onclick="addToCart('Legs and Breast', 300, 'legpiecewithbreast.jpeg', this)">Add to Cart</button>                           
+                </form>
+            </div>
+            <div class="menu-item">
+                <img src="{{ url_for('static', filename='images/wings.jpeg') }}" alt="Salmon Fillet">
+                <h3>Wings</h3>
+                <p>Chicken wings are a favorite for any occasion, whether marinated for grilling</p>
+                <div class="rating" data-rating="3"></div>
+                <p><strong>₹280/1kg</strong></p>
+                <form action="{{ url_for('cart_page') }}" method="POST">
+                    <input type="hidden" name="item" value="Chicken Breast">
+                    <input type="hidden" name="price" value="10.99">
+                    <label for="quantity-wings">Quantity:</label>
+                    <input type="number" id="quantity-omega" name="quantity" value="1" min="1" required>
+                    <button type="button" onclick="addToCart('Wings', 280, 'wings.jpeg', this)">Add to Cart</button>                           
+                </form>
+            </div>
+            <div class="menu-item">
+                <img src="{{ url_for('static', filename='images/sausages.jpeg') }}" alt="Salmon Fillet">
+                <h3>Sausages</h3>
+                <p>These tender and juicy chicken sausages are made from premium cuts</p>
+                <div class="rating" data-rating="4"></div>
+                <p><strong>₹550/1kg</strong></p>
+                <form action="{{ url_for('cart_page') }}" method="POST">
+                    <input type="hidden" name="item" value="Chicken Breast">
+                    <input type="hidden" name="price" value="10.99">
+                    <label for="quantity-sausages">Quantity:</label>
+                    <input type="number" id="quantity-omega" name="quantity" value="1" min="1" required>
+                    <button type="button" onclick="addToCart('Sausages', 550, 'sausages.jpeg', this)">Add to Cart</button>                           
+                </form>
+            </div>
+        
+        </div>
+    </main>
+    <script>
+        function addToCart(itemName, price, image, buttonElement) {
+            const quantityInput = buttonElement.previousElementSibling;
+            const quantity = parseInt(quantityInput.value) || 1;
+            
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let existingItem = cart.find(item => item.name === itemName);
+            
+            if (existingItem) {
+                existingItem.quantity = (existingItem.quantity || 0) + quantity;
+            } else {
+                cart.push({ 
+                    name: itemName, 
+                    price: price, 
+                    image: image,
+                    quantity: quantity
+                });
+            }
+            
+            localStorage.setItem("cart", JSON.stringify(cart));
+            
+            // Remove any existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => notification.remove());
+            
+            // Show new notification
+            showNotification(`Added ${quantity} ${itemName}(s) to cart!`);
+            
+            // Reset quantity
+            quantityInput.value = 1;
+            
+            // Update cart count
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+            
+            const cartCount = document.querySelector('.cart-count');
+            if (cartCount) {
+                cartCount.textContent = totalItems;
+            }
+        }
+
+        function showNotification(message) {
+            // Remove any existing notifications first
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => notification.remove());
+            
+            // Create and add new notification
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Remove the notification after animation completes
+            setTimeout(() => {
+                notification.remove();
+            }, 2000);
+        }
+
+        // Initialize cart count when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+    </script>
+
+
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <h3>About Brost</h3>
+                <p>Brost is your go-to online meat delivery service, ensuring fresh and high-quality cuts at your doorstep within minutes. We deliver mutton, chicken, seafood, eggs, and ready-to-cook meats with utmost hygiene and care.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{{ url_for('main_page') }}"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="{{ url_for('menu_page') }}"><i class="fa-solid fa-utensils"></i> Menu</a></li>
+                    <li><a href="{{ url_for('cart_page') }}"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>    
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Brost. All Rights Reserved. | Designed with ❤️ by Brost Team</p>
+        </div>
+    </footer>
+</body>
+</html>

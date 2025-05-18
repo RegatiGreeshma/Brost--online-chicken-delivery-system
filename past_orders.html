@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Past Orders - Brost</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/past_orders.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/Brost Logo.jpeg') }}" alt="Brost Logo" class="image">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('main_page') }}"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="{{ url_for('menu_page') }}"><i class="fa-solid fa-utensils"></i> Menu</a></li>
+                <li><a href="{{ url_for('cart_page') }}"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="orders-container">
+        {% if orders %}
+            {% for order in orders %}
+            <div class="bill-container">
+                <header>
+                    <h1>Order #{{ order['id'] }}</h1>
+                    <p>Date: {{ order['created_at'].strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                    <p>Status: {{ order['status'] }}</p>
+                </header>
+    
+                <section class="order-details">
+                    <p><strong>Subtotal:</strong> ₹{{ "%.2f"|format(order['total_price']) }}</p>
+                    {% if order['discount_amount'] and order['discount_amount'] > 0 %}
+                    <p><strong>Discount{% if order['discount_code'] %} ({{ order['discount_code'] }}){% endif %}:</strong> -₹{{ "%.2f"|format(order['discount_amount']) }}</p>
+                    <p><strong>Final Amount Paid:</strong> ₹{{ "%.2f"|format(order['final_amount']) }}</p>
+                    {% else %}
+                    <p><strong>Total Amount:</strong> ₹{{ "%.2f"|format(order['total_price']) }}</p>
+                    {% endif %}
+                </section>
+    
+                <h3>Items Ordered</h3>
+                <table>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                    {% if order['items'] %}
+                        {% for item in order['items'] %}
+                        <tr>
+                            <td>{{ item['item_name'] }}</td>
+                            <td>{{ item['quantity'] }}</td>
+                            <td>₹{{ "%.2f"|format(item['price']) }}</td>
+                            <td>₹{{ "%.2f"|format(item['subtotal']) }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="4">No items found for this order</td>
+                        </tr>
+                    {% endif %}
+                </table>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-orders">
+                <h2>No orders found</h2>
+                <p>You haven't placed any orders yet.</p>
+                <a href="{{ url_for('menu_page') }}" class="menu-btn">Browse Menu</a>
+            </div>
+        {% endif %}
+    </div>
+    
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <h3>About Brost</h3>
+                <p>Brost is your go-to online meat delivery service, ensuring fresh and high-quality cuts at your doorstep within minutes. We deliver mutton, chicken, seafood, eggs, and ready-to-cook meats with utmost hygiene and care.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{{ url_for('main_page') }}">Home</a></li>
+                    <li><a href="{{ url_for('menu_page') }}">Menu</a></li>
+                    <li><a href="{{ url_for('login_page') }}">Login</a></li>
+                    <li><a href="{{ url_for('cart_page') }}">Cart</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Brost. All Rights Reserved. | Designed with ❤️ by Brost Team</p>
+        </div>
+    </footer>
+</body>
+</html>

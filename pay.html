@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Brost</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pay.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/Brost Logo.jpeg') }}" alt="Brost Logo" class="image">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('main_page') }}"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="{{ url_for('menu_page') }}"><i class="fa-solid fa-utensils"></i> Menu</a></li>
+                <li><a href="{{ url_for('cart_page') }}"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Payment Section -->
+    <div class="payment-container">
+        <h2>Payment Options</h2>
+        
+        <form id="paymentForm">
+            <input type="hidden" name="order_id" value="{{ order_id }}">
+            
+            <h3>Order Total: ₹<span id="orderTotal">{{ order_total }}</span></h3>
+            
+            <!-- Discount Section -->
+            <label for="discountCode">Apply Discount Code:</label>
+            <input type="text" id="discountCode" name="discountCode" placeholder="Enter code">
+            <button type="button" onclick="applyDiscount()">Apply</button>
+            <p id="discountMessage"></p>
+        
+            <h3>Final Amount: ₹<span id="finalAmount">{{ order_total }}</span></h3>
+            <input type="hidden" name="finalAmount" id="finalAmountInput" value="{{ order_total }}">
+            <input type="hidden" name="discountAmount" id="discountAmountInput" value="0">
+        
+            <label for="paymentMethod">Select Payment Method:</label>
+            <select id="paymentMethod" name="paymentMethod" onchange="togglePaymentFields()">
+                <option value="credit">Credit Card</option>
+                <option value="debit">Debit Card</option>
+                <option value="upi">UPI</option>
+                <option value="netbanking">Net Banking</option>
+                <option value="cod">Cash on Delivery</option>
+            </select>
+        
+            <!-- Credit/Debit Card Fields -->
+            <div id="cardDetails">
+                <input type="text" name="cardNumber" placeholder="Card Number" required>
+                <input type="text" name="cardHolderName" placeholder="Card Holder Name" required>
+                <input type="text" name="expiryDate" placeholder="Expiry Date (MM/YY)" required>
+                <input type="text" name="cvv" placeholder="CVV" required>
+            </div>
+        
+            <!-- UPI Fields -->
+            <div id="upiDetails" style="display: none;">
+                <input type="text" name="upiId" placeholder="Enter UPI ID" required>
+            </div>
+        
+            <!-- Net Banking Fields -->
+            <div id="netBankingDetails" style="display: none;">
+                <input type="text" name="bankName" placeholder="Bank Name" required>
+                <input type="text" name="accountNumber" placeholder="Account Number" required>
+            </div>
+        
+            <!-- COD Notice -->
+            <div id="codDetails" style="display: none;">
+                <p>You will pay in cash when your order is delivered.</p>
+            </div>
+        
+            <button type="button" onclick="processPayment()">Proceed to Checkout</button>
+        </form>
+    </div>
+
+        
+        <script>
+            function togglePaymentFields() {
+                const method = document.getElementById("paymentMethod").value;
+                document.getElementById("cardDetails").style.display = (method === "credit" || method === "debit") ? "block" : "none";
+                document.getElementById("upiDetails").style.display = (method === "upi") ? "block" : "none";
+                document.getElementById("netBankingDetails").style.display = (method === "netbanking") ? "block" : "none";
+                document.getElementById("codDetails").style.display = (method === "cod") ? "block" : "none";
+            }
+        
+            function applyDiscount() {
+                const code = document.getElementById("discountCode").value;
+                const message = document.getElementById("discountMessage");
+                const orderTotalValue = parseFloat(document.getElementById("orderTotal").textContent);
+        
+                let discountAmount = 0;
+                if (code === "BROST10") {
+                    discountAmount = (orderTotalValue * 0.10).toFixed(2);
+                    message.innerText = "10% Discount Applied!";
+                    message.style.color = "green";
+                } else {
+                    message.innerText = "Invalid Discount Code!";
+                    message.style.color = "red";
+                }
+        
+                const finalAmount = (orderTotalValue - discountAmount).toFixed(2);
+                document.getElementById("discountAmountInput").value = discountAmount;
+                document.getElementById("finalAmountInput").value = finalAmount;
+                document.getElementById("finalAmount").textContent = finalAmount;
+            }
+        
+            function processPayment() {
+                const formData = new FormData(document.getElementById("paymentForm"));
+        
+                fetch("/pay", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Payment Successful!");
+                        window.location.href = `/bill/${data.order_id}`;
+                    } else {
+                        alert("Payment Failed: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error processing payment:", error);
+                    alert("An error occurred. Please try again.");
+                });
+            }
+        </script>
+        
+
+   <!-- Footer Section (Moved Outside Form) -->
+   <footer>
+    <div class="footer-container">
+        <!-- About Section -->
+        <div class="footer-about">
+            <h3>About Brost</h3>
+            <p>Brost is your go-to online meat delivery service, ensuring fresh and high-quality cuts at your doorstep within minutes. We deliver mutton, chicken, seafood, eggs, and ready-to-cook meats with utmost hygiene and care.</p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-links">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="{{ url_for('main_page') }}">Home</a></li>
+                <li><a href="{{ url_for('menu_page') }}">Menu</a></li>
+                <li><a href="{{ url_for('login_page') }}">Login</a></li>
+                <li><a href="{{ url_for('cart_page') }}">Cart</a></li>
+            </ul>
+        </div>
+
+        <!-- Social Media -->
+        <div class="footer-social">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="footer-bottom">
+        <p>&copy; 2025 Brost. All Rights Reserved. | Designed with ❤️ by Brost Team</p>
+    </div>
+</footer>
+</body>
+</html>

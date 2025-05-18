@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/Brost Logo.jpeg') }}" alt="Brost Logo" class="image">
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    </header>
+    
+    <div class="dashboard">
+        <div class="card">
+            <h2>Pending Orders</h2>
+            <table id="pendingOrdersTable">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Order Date</th>
+                    <th>Action</th>
+                </tr>
+                {% for order in pending_orders %}
+                <tr id="order-{{ order.id }}">
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.first_name }} {{ order.last_name }}</td>
+                    <td>₹{{ "%.2f"|format(order.total_price) }}</td>
+                    <td class="status-cell">{{ order.status }}</td>
+                    <td>{{ order.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>
+                        <button onclick="updateOrderStatus('{{ order.id }}')" class="update-btn">
+                            Mark Completed
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+        <div class="card">
+            <h2>Completed Orders</h2>
+            <table id="completedOrdersTable">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Order Date</th>
+                </tr>
+                {% for order in completed_orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.first_name }} {{ order.last_name }}</td>
+                    <td>₹{{ "%.2f"|format(order.total_price) }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>{{ order.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+        <!-- Payment Details Table -->
+        <div class="card">
+            <h2>Payment Transactions</h2>
+            <table id="paymentsTable">
+                <tr>
+                    <th>Payment ID</th>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Payment Method</th>
+                    <th>Status</th>
+                    <th>Transaction ID</th>
+                    <th>Payment Date</th>
+                </tr>
+                {% for payment in payments %}
+                <tr>
+                    <td>{{ payment.id }}</td>
+                    <td>{{ payment.order_id }}</td>
+                    <td>{{ payment.first_name }} {{ payment.last_name }}</td>
+                    <td>
+                        {% if payment.payment_method == 'credit' %}
+                            Credit Card
+                        {% elif payment.payment_method == 'debit' %}
+                            Debit Card
+                        {% elif payment.payment_method == 'upi' %}
+                            UPI
+                        {% elif payment.payment_method == 'netbanking' %}
+                            Net Banking
+                        {% elif payment.payment_method == 'cod' %}
+                            Cash on Delivery
+                        {% else %}
+                            {{ payment.payment_method }}
+                        {% endif %}
+                    </td>
+                    <td class="{% if payment.payment_status == 'success' %}success{% else %}failed{% endif %}">
+                        {{ payment.payment_status|title }}
+                    </td>
+                    <td>{{ payment.transaction_id }}</td>
+                    <td>{{ payment.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+        <!-- Registered Users Table -->
+        <div class="card">
+            <h2>Registered Users</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Landmark</th>
+                    <th>Pincode</th>
+                </tr>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.first_name }} {{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.address if user.address else 'N/A' }}</td>
+                    <td>{{ user.landmark if user.landmark else 'N/A' }}</td>
+                    <td>{{ user.pincode if user.pincode else 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <h2>Orders by Date</h2>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Total Orders</th>
+    </tr>
+    {% for order in orders_by_date %}
+    <tr>
+        <td>{{ order.order_date }}</td>
+        <td>{{ order.total_orders }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+    <script>
+    async function updateOrderStatus(orderId) {
+        try {
+            const response = await fetch('/update_order_status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ order_id: parseInt(orderId) })
+            });
+
+            const data = await response.json();
+            
+            if (data.success) {
+                // Remove the row from pending orders
+                const row = document.getElementById(`order-${orderId}`);
+                if (row) {
+                    // Create new row for completed orders table
+                    const completedTable = document.getElementById('completedOrdersTable');
+                    const newRow = completedTable.insertRow(1); // Insert after header
+                    
+                    // Clone cells from the pending row
+                    for (let i = 0; i < row.cells.length - 1; i++) { // -1 to exclude action button
+                        const cell = newRow.insertCell();
+                        // If this is the status cell, set it to "Completed"
+                        if (i === 3) {
+                            cell.textContent = "Completed";
+                        } else {
+                            cell.textContent = row.cells[i].textContent;
+                        }
+                    }
+                    
+                    // Remove the row from pending orders
+                    row.remove();
+                }
+            } else {
+                alert('Failed to update order status');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error updating order status');
+        }
+    }
+    </script>
+    
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-container">
+            <!-- About Section -->
+            <div class="footer-about">
+                <h3>About Brost</h3>
+                <p>Brost is your go-to online meat delivery service, ensuring fresh and high-quality cuts at your doorstep within minutes. We deliver mutton, chicken, seafood, eggs, and ready-to-cook meats with utmost hygiene and care.</p>
+            </div>
+      
+            <!-- Quick Links -->
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{{ url_for('main_page') }}">Home</a></li>
+                    <li><a href="{{ url_for('menu_page') }}">Menu</a></li>
+                    <li><a href="{{ url_for('login_page') }}">Login</a></li>
+                    <li><a href="{{ url_for('cart_page') }}">Cart</a></li>
+                </ul>
+            </div>
+      
+            <!-- Social Media -->
+            <div class="footer-social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+      
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <p>&copy; 2025 Brost. All Rights Reserved. | Designed with ❤️ by Brost Team</p>
+        </div>
+    </footer>
+</body>
+</html>

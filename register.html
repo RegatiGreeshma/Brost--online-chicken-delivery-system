@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Brost</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <img src="{{ url_for('static', filename='images/Brost Logo.jpeg') }}" alt="Brost Logo" class="image">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('main_page') }}"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="{{ url_for('menu_page') }}"><i class="fa-solid fa-utensils"></i> Menu</a></li>
+                <li><a href="{{ url_for('cart_page') }}"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
+        
+            </ul>
+        </nav>
+    </header>
+    <!-- Login Form -->
+    <div class="register-container">
+        <h2>Register</h2>
+        <input type="text" id="firstName" placeholder="First Name">
+        <input type="text" id="lastName" placeholder="Last Name">
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <div id="addressContainer">
+            <input type="text" placeholder="Address">
+            <input type="text" placeholder="Landmark">
+            <input type="text" placeholder="Pincode">
+        </div>
+        <button onclick="addAddress()">+ Add Another Address</button>
+        <button onclick="register()">Register</button>
+        <p id="message"></p>
+    </div>
+    <script>
+        function addAddress() {
+            const container = document.getElementById("addressContainer");
+            const div = document.createElement("div");
+            div.innerHTML = `<input type="text" placeholder="Address">
+                             <input type="text" placeholder="Landmark">
+                             <input type="text" placeholder="Pincode">`;
+            container.appendChild(div);
+        }
+
+        async function register() {
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    // Collect all address inputs
+    const addressContainers = document.querySelectorAll("#addressContainer > div, #addressContainer");
+    const addresses = [];
+
+    addressContainers.forEach(container => {
+        const inputs = container.querySelectorAll("input");
+        if (inputs.length >= 3) {
+            addresses.push({
+                address: inputs[0].value,
+                landmark: inputs[1].value,
+                pincode: inputs[2].value
+            });
+        }
+    });
+    const response = await fetch("/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            password,
+            addresses: addresses
+        })
+    });
+
+    const result = await response.json();
+    if (result.redirect) {
+        alert("Registration Successful!");
+        window.location.href = result.redirect;
+    } else {
+        document.getElementById("message").innerText = result.message;
+    }
+}
+    </script>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <h3>About Brost</h3>
+                <p>Brost delivers fresh, high-quality meat within minutes. We ensure hygiene and top-notch customer service.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{{ url_for('main_page') }}"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="{{ url_for('menu_page') }}"><i class="fa-solid fa-utensils"></i> Menu</a></li>
+                <li><a href="{{ url_for('cart_page') }}"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>    
+                
+   
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Brost. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

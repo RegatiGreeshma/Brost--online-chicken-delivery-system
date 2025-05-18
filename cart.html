@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Brost - Cart</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    </head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/Brost Logo.jpeg') }}" alt="Brost Logo" class="image">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('main_page') }}"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="{{ url_for('menu_page') }}"><i class="fa-solid fa-utensils"></i> Menu</a></li>
+                <li><a href="{{ url_for('cart_page') }}"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
+        
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Your Cart</h2>
+        <div class="cart" id="cart">
+            <!-- Cart items will be loaded here -->
+        </div>
+        <p class="total">Total: ₹<span id="total">0.00</span></p>
+        <button onclick="checkout()">Proceed to Checkout</button>
+    </main>
+
+    <script>
+        // Load cart when page loads
+        document.addEventListener('DOMContentLoaded', loadCart);
+
+        function loadCart() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartContainer = document.getElementById("cart");
+            const totalElement = document.getElementById("total");
+            cartContainer.innerHTML = "";
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartContainer.innerHTML = '<p class="cart-empty">Your cart is empty.</p>';
+                totalElement.textContent = "0.00";
+                return;
+            }
+
+            cart.forEach((item, index) => {
+                total += item.price * (item.quantity || 1);
+                const div = document.createElement("div");
+                div.classList.add("cart-item");
+                div.innerHTML = `
+                    <img src="/static/images/${item.image}" alt="${item.name}" 
+                         onerror="this.onerror=null; this.src='/static/images/default.jpg';">
+                    <span>${item.name} - ₹${item.price}</span>
+                    <div class="quantity-controls">
+                        <button onclick="updateQuantity(${index}, -1)">-</button>
+                        <span>${item.quantity || 1}</span>
+                        <button onclick="updateQuantity(${index}, 1)">+</button>
+                    </div>
+                    <span class="item-total">₹${(item.price * (item.quantity || 1)).toFixed(2)}</span>
+                    <button onclick="removeItem(${index})">Remove</button>
+                `;
+                cartContainer.appendChild(div);
+            });
+
+            totalElement.textContent = total.toFixed(2);
+        }
+
+        function updateQuantity(index, change) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart[index].quantity = (cart[index].quantity || 1) + change;
+            
+            if (cart[index].quantity < 1) {
+                cart.splice(index, 1);
+            }
+            
+            localStorage.setItem("cart", JSON.stringify(cart));
+            loadCart();
+        }
+
+        function removeItem(index) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            loadCart();
+        }
+
+        
+        function checkout() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    const total = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+
+    fetch("/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cart: cart, total: total }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (!data.success) {
+            alert(data.message || "Checkout failed.");
+            return;
+        }
+
+        localStorage.removeItem("cart"); // Clear cart after order
+
+        if (data.order_id) {
+            alert(`Order placed successfully! Your Order ID is: ${data.order_id}`); // Pop-up message
+            window.location.href = `/pay?order_id=${data.order_id}`;
+        } else {
+            alert("Error: Order ID not received. Please try again.");
+        }
+    })
+    .catch(error => {
+        console.error("Error during checkout:", error);
+        alert("An error occurred while processing your order. Please try again.");
+    });
+}
+
+
+
+    </script>
+
+    
+    
+   <!-- Social Media Section -->
+<!-- Footer Section -->
+<footer>
+  <div class="footer-container">
+      <!-- About Section -->
+      <div class="footer-about">
+          <h3>About Brost</h3>
+          <p>Brost is your go-to online meat delivery service, ensuring fresh and high-quality cuts at your doorstep within minutes. We deliver mutton, chicken, seafood, eggs, and ready-to-cook meats with utmost hygiene and care.</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="{{ url_for('main_page') }}"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="{{ url_for('menu_page') }}"><i class="fa-solid fa-utensils"></i> Menu</a></li>
+                <li><a href="{{ url_for('cart_page') }}"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>    
+          
+   
+          </ul>
+      </div>
+
+      <!-- Social Media -->
+      <div class="footer-social">
+          <h3>Follow Us</h3>
+          <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+              <a href="#"><i class="fab fa-whatsapp"></i></a>
+          </div>
+      </div>
+  </div>
+
+  <!-- Copyright -->
+  <div class="footer-bottom">
+      <p>&copy; 2025 Brost. All Rights Reserved. | Designed with ❤️ by Brost Team</p>
+  </div>
+</footer>
+
+
+</body>
+</html>

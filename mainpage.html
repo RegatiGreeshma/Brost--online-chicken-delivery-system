@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brost - Fresh Meat Delivery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/Brost Logo.jpeg') }}" alt="Brost Logo" class="image">
+    
+        <!-- Location -->
+        <div class="location">
+            <i class="fa-solid fa-location-dot"></i>
+            <a href= "https://surl.li/lwadyo" target="_blank"> Vidya Nagar, Ram Nagar, Adikmet,<br>Hyderabad, Telangana 500044</a>
+        </div>
+            
+<!-- Search Bar -->
+<div class="search-section">
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search item..." onkeyup="showSuggestions()" autocomplete="off">
+        <button type="submit" onclick="searchItem()"><i class="fa-solid fa-search"></i></button>
+    </div>
+    <ul id="suggestions" class="suggestions-list"></ul>
+</div>
+
+<script>
+    // List of available menu items
+    const menuItems = [
+        "Boneless Chicken", "Dressed", "SkinLess", "Liver", "Gizzard", "Leg piece",
+        "Lollipops", "Eggs", "Omega Eggs", "Legs and Breast", "Wings", "Sausages"
+    ];
+
+    function showSuggestions() {
+        let query = document.getElementById("search").value.trim().toLowerCase();
+        let suggestionsBox = document.getElementById("suggestions");
+        suggestionsBox.innerHTML = ""; // Clear previous suggestions
+
+        if (query === "") {
+            suggestionsBox.style.display = "none";
+            return;
+        }
+
+        let filteredItems = menuItems.filter(item => item.toLowerCase().includes(query));
+        
+        filteredItems.forEach(item => {
+            let li = document.createElement("li");
+            li.textContent = item;
+            li.onclick = function () {
+                document.getElementById("search").value = item;
+                window.location.href = `/menu?search=${encodeURIComponent(item)}`;
+            };
+            suggestionsBox.appendChild(li);
+        });
+
+        suggestionsBox.style.display = filteredItems.length > 0 ? "block" : "none";
+    }
+
+    // Hide suggestions when clicking outside
+    document.addEventListener("click", function (event) {
+        if (!event.target.closest(".search-section")) {
+            document.getElementById("suggestions").style.display = "none";
+        }
+    });
+</script>
+        <nav>
+          <ul>
+            <li><a href="{{ url_for('main_page') }}"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="{{ url_for('menu_page') }}"><i class="fa-solid fa-utensils"></i> Menu</a></li>
+            <li><a href="{{ url_for('cart_page') }}"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
+            <li><a href="{{ url_for('past_orders') }}"><i class="fa-solid fa-clock-rotate-left"></i> Past Orders</a></li>
+            <li><a href="{{ url_for('logout') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>   
+          </ul>
+        </nav>
+    </header>
+    
+
+<div class="banner-section">
+    <img src="{{ url_for('static', filename='images/back image.jpeg') }}" alt="Background Image" class="image2">
+    <div class="banner-text">
+        <h1>Brost Fresh meat at your doorstep</h1>
+        <p>In minutes</p>
+        <button class="custom-button"><a href="{{ url_for('menu_page') }}">Order Now</a></button>
+    </div>
+</div>
+
+<!-- Menu Section -->
+<section class="menu">
+  <h2>Favourites  ❤️</h2>
+  <div class="menu-items">
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='images/wholechi.jpeg') }}" alt=" ">
+                <h3>Dressed</h3>
+                <p>Juicy and flavorful chicken chops.</p>
+                <p><strong>₹350/1kg</strong></p>
+      </div>
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='images/boneless.jpeg') }}" alt="Chicken Breast">
+        <h3>Boneless Chicken</h3>
+        <p>Fresh and tender chicken breast.</p>
+        <p><strong>₹350/lkg</strong></p>
+      </div>
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='images/legpiece.jpeg') }}" alt="Salmon Fillet">
+        <h3>Leg piece </h3>
+        <p>Tender and juicy chicken leg pieces</p>
+        <p><strong>₹320/lkg</strong></p>
+      </div>
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='images/lollipops.jpeg') }}" alt="Salmon Fillet">
+        <h3>Lollipops </h3>
+        <p>Succulent and meaty chicken lollipops</p>
+        <p><strong>₹320/lkg</strong></p>
+      </div>
+  </div>
+</section>
+
+
+
+<!-- Customer Reviews Section -->
+<section class="reviews">
+    <h2>Reviews <img src="{{ url_for('static', filename='images/review.png') }}" alt="Background Image" class="image3"></h2>
+    <div class="review-container">
+        <div class="review">
+            <p>"Amazing quality and super fresh! I love ordering from Brost!"</p>
+            <h4>- Sarah K.</h4>
+        </div>
+        <div class="review">
+            <p>"Fast delivery and the best meat I've ever tasted!"</p>
+            <h4>- John D.</h4>
+        </div>
+        <div class="review">
+            <p>"Great service and excellent quality. Highly recommend!"</p>
+            <h4>- Emily R.</h4>
+        </div>
+        <div class="review">
+            <p>"Excellent service and great variety of meat options."</p>
+            <h4>- Mike T.</h4>
+        </div>
+        <div class="review">
+            <p>"The meat is always so fresh, and delivery is always on time!"</p>
+            <h4>- Laura P.</h4>
+        </div>
+    </div>
+</section>
+
+<!-- Social Media Section -->
+<!-- Footer Section -->
+<footer>
+  <div class="footer-container">
+      <!-- About Section -->
+      <div class="footer-about">
+          <h3>About Brost</h3>
+          <p>Brost is your go-to online meat delivery service, ensuring fresh and high-quality cuts at your doorstep within minutes. We deliver mutton, chicken, seafood, eggs, and ready-to-cook meats with utmost hygiene and care.</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+              <li><a href="{{ url_for('main_page') }}">Home</a></li>
+              <li><a href="{{ url_for('menu_page') }}">Menu</a></li>
+              <li><a href="{{ url_for('login_page') }}">Login</a></li>
+              <li><a href="{{ url_for('cart_page') }}">Cart</a></li>
+              
+          </ul>
+      </div>
+
+      <!-- Social Media -->
+      <div class="footer-social">
+          <h3>Follow Us</h3>
+          <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+              <a href="#"><i class="fab fa-whatsapp"></i></a>
+          </div>
+      </div>
+  </div>
+
+  <!-- Copyright -->
+  <div class="footer-bottom">
+      <p>&copy; 2025 Brost. All Rights Reserved. | Designed with ❤️ by Brost Team</p>
+  </div>
+</footer>
+
+
+</body>
+</html>
