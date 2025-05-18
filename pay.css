@@ -1,0 +1,290 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header Styles */
+header {
+  background-color: #ff4d4d;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header img.image {
+  height: 50px;
+}
+
+header nav ul {
+  display: flex;
+  list-style: none;
+}
+
+header nav ul li {
+  margin-left: 1.5rem;
+}
+
+header nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s;
+}
+
+header nav ul li a i {
+  margin-right: 0.5rem;
+}
+
+header nav ul li a:hover {
+  color: #c0392b;
+}
+
+/* Payment Container */
+.payment-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.payment-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-size: 1.8rem;
+}
+
+/* Order Summary */
+.order-summary {
+  background-color: #ecf0f1;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #ff4d4d;
+}
+
+.order-summary h3 {
+  margin-bottom: 0.8rem;
+  color: #333;
+}
+
+.order-summary p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+/* Form Elements */
+label {
+  display: block;
+  margin: 1rem 0 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+select, input[type="text"] {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+select:focus, input[type="text"]:focus {
+  border-color: #ff4d4d;
+  outline: none;
+}
+
+/* Payment Method Sections */
+#cardDetails, #upiDetails, #netBankingDetails, #codDetails {
+  background-color: #f8f9fa;
+  padding: 1.2rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  border: 1px solid #e1e1e1;
+}
+
+/* Discount Section */
+.discount-section {
+  margin: 1.5rem 0;
+  padding: 1.2rem;
+  background-color: #fdf2f2;
+  border-radius: 8px;
+  border: 1px dashed #ff4d4d;
+}
+
+.discount-section input {
+  width: 70%;
+  display: inline-block;
+}
+
+.discount-section button {
+  display: inline-block;
+  width: 28%;
+  padding: 0.8rem;
+  margin-left: 2%;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.discount-section button:hover {
+  background-color: #c0392b;
+}
+
+/* Submit Button */
+button[type="button"] {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="button"]:hover {
+  background-color: #c0392b;
+}
+
+/* Full-Width Footer */
+footer {
+  background-color: #272829;
+  color: white;
+  padding: 3rem 0 1rem;
+  margin-top: 3rem;
+  width: 100%;
+  text-align: center;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 2rem;
+}
+
+.footer-about, .footer-links, .footer-social {
+  flex: 1;
+  margin-bottom: 1.5rem;
+}
+
+.footer-about h3, .footer-links h3, .footer-social h3 {
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.footer-about p {
+  color: #bdc3c7;
+  line-height: 1.6;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links ul li a {
+  color: #bdc3c7;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links ul li a:hover {
+  color: #ff4d4d;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-icons a {
+  color: white;
+  font-size: 1.5rem;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #ff4d4d;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #444;
+  color: #95a5a6;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .payment-container {
+      padding: 1.5rem;
+      margin: 1rem;
+  }
+
+  .discount-section input {
+      width: 65%;
+  }
+
+  .discount-section button {
+      width: 32%;
+  }
+
+  header {
+      flex-direction: column;
+      padding: 1rem;
+  }
+
+  header img.image {
+      margin-bottom: 1rem;
+  }
+
+  header nav ul {
+      width: 100%;
+      justify-content: space-around;
+  }
+
+  header nav ul li {
+      margin: 0;
+  }
+
+  .footer-container {
+      flex-direction: column;
+      text-align: center;
+  }
+
+  .social-icons {
+      justify-content: center;
+  }
+}

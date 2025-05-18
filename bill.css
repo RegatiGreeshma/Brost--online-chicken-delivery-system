@@ -1,0 +1,272 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+.image {
+    width: 90px;
+    height: 80px;
+    border-radius: 5px;
+  }
+header {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header h1 {
+    margin: 0;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+}
+nav ul li {
+    display: inline;
+}
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+.bill-container {
+    width: 60%;
+    background: white;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    border-bottom: 2px solid #f63030;
+    padding-bottom: 10px;
+}
+
+h1 {
+    color: #ffff;
+    margin: 0;
+}
+
+.order-details {
+    margin: 20px 0;
+    font-size: 16px;
+    padding: 10px;
+    background: #f1f1f1;
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f63030;
+    color: white;
+}
+
+.bill-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+button, .home-btn {
+    background-color: #f63030;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+button:hover, .home-btn:hover {
+    background-color: #f63030;
+}
+/* Social Media */
+footer {
+    background-color: #222;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+  }
+  
+  .footer-about, .footer-links, .footer-social {
+    max-width: 300px;
+  }
+  
+  .footer-about h3, .footer-links h3, .footer-social h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  
+  .footer-about p {
+    font-size: 14px;
+    color: #bbb;
+  }
+  
+  .footer-links ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-links ul li {
+    margin: 5px 0;
+  }
+  
+  .footer-links ul li a {
+    text-decoration: none;
+    color: #bbb;
+    font-size: 14px;
+  }
+  
+  .footer-links ul li a:hover {
+    color: white;
+  }
+  
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .social-icons a {
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+  }
+  
+  .social-icons a:hover {
+    color: #ff6600; /* Highlight color */
+  }
+  
+  .footer-bottom {
+    margin-top: 10px;
+    font-size: 14px;
+    border-top: 1px solid #444;
+    padding-top: 10px;
+  }
+  /* Payment Summary Section */
+.payment-summary {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.summary-table {
+  width: 100%;
+  max-width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+}
+
+.summary-table td {
+  padding: 10px 15px;
+  text-align: right;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.summary-table td:first-child {
+  text-align: left;
+}
+
+.total-row {
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-top: 2px solid #333;
+  background: #ff4d4d;
+  color: white;
+}
+
+.total-row td {
+  padding-top: 12px;
+}
+
+/* Make sure the invoice table aligns properly */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #ff4d4d;
+  color: white;
+  text-align: center;
+}
+
+/* Ensure table and invoice layout remain consistent */
+.bill-container {
+  width: 70%;
+  background: white;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer alignment */
+.bill-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding: 10px;
+  background: #ff4d4d;
+  border-radius: 5px;
+}
+
+.bill-footer button, .home-btn {
+  background-color: white;
+  color: #ff4d4d;
+  border: 2px solid #ff4d4d;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.bill-footer button:hover, .home-btn:hover {
+  background-color: #ff4d4d;
+  color: white;
+}

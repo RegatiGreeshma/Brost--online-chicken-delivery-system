@@ -1,0 +1,426 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f8f8;
+}
+.image {
+  width: 90px;
+  height: 80px;
+  border-radius: 5px;
+}
+
+/* Header */
+header {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 40px; /* Adjust spacing between elements */
+}
+
+header img {
+  height: 60px; /* Adjust logo size */
+}
+
+/* Container for Location & Search */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 25px; /* Space between location and search */
+}
+
+/* Location */
+.location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  background: #ff4d4d;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.location i {
+  font-size: 20px;
+  color: white;
+}
+
+.location a {
+  text-decoration: none;
+  color: rgb(252, 247, 247);
+  font-weight: bold;
+}
+
+/* Search Bar */
+.search-container {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 5px 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.search-container input {
+  border: none;
+  padding: 8px;
+  font-size: 14px;
+  width: 230px;
+  outline: none;
+}
+
+.search-container button {
+  background: #e63946;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.search-container button i {
+  color: white;
+  font-size: 16px;
+}
+
+/* Navigation */
+nav {
+  margin-left: auto; /* Push navigation to the right */
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 16px;
+}
+
+nav ul li a i {
+  font-size: 18px;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  header {
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+  }
+
+  .header-right {
+      flex-direction: column;
+      gap: 10px;
+  }
+
+  .search-container input {
+      width: 180px;
+  }
+
+  nav ul {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+  }
+}
+
+/* Positioning the search bar (no changes needed here) */
+.search-section {
+  position: relative; /* Keeps the search bar positioned normally */
+}
+
+/* Suggestions list styling */
+.suggestions-list {
+  position: absolute;
+  top: 100%; /* Position it just below the search input field */
+  left: 0;
+  width: 100%; /* Make the suggestions match the input width */
+  background-color: rgba(250, 34, 34, 0.8); /* Semi-transparent background */
+  border: 1px solid #f3eded;
+  max-height: 150px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: none;
+  z-index: 10; /* Ensure the suggestions appear above other elements */
+}
+
+/* Styling for individual suggestion items */
+.suggestions-list li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #e76c6c;
+}
+
+.suggestions-list li:hover {
+  background: #ef5050;
+}
+
+/* Banner Section */
+.banner-section {
+  position: relative;
+  text-align: center;
+}
+
+.image2 {
+  width: 100vw;
+  height: 99vh;
+  object-fit: cover;
+}
+.image3 {
+  width:5vw;
+  height:8vh;
+  
+}
+
+.banner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(244, 43, 43);
+  text-align: center;
+  font-weight: bold;
+  font-style:"italic";
+  font-family:"sans-serif";
+}
+
+.banner-text h1 {
+  font-size: 55px;
+  font-weight: bold;
+}
+
+.banner-text p {
+  font-size: 25px;
+}
+
+.custom-button {
+  background-color: #f63030;
+  color: rgb(243, 244, 242); /* Button text color */
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  
+  /* Added styles */
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  display: inline-block; /* Ensures the button behaves like a block-level element */
+}
+
+.custom-button a {
+  color: white; /* Set the link text color to white */
+  text-decoration: none; /* Remove underline from the link */
+}
+
+.custom-button a:hover {
+  text-decoration: underline; /* Optional: underline the link on hover */
+}
+
+
+
+/* Menu Section */
+/* General Styles for the Menu Section */
+.menu {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.menu h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Menu Items Layout */
+.menu-items {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.menu-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 250px;
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.menu-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Menu Item Image */
+.menu-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* Menu Item Text */
+.menu-item h3 {
+  font-size: 1.25rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+  font-family: 'Arial', sans-serif;
+}
+
+.menu-item p {
+  font-size: 0.9rem;
+  color: #777;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .menu-items {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .menu-item {
+      width: 90%;
+  }
+}
+
+
+/* Customer Reviews */
+.reviews {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: white;
+}
+
+.reviews h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.review-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.review {
+  background: #f8f8f8;
+  padding: 20px;
+  border-radius: 10px;
+  width: 250px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.review p {
+  font-style: italic;
+  color: #555;
+}
+
+.review h4 {
+  margin-top: 10px;
+  color: #333;
+}
+
+/* Social Media */
+footer {
+  background-color: #222;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.footer-about, .footer-links, .footer-social {
+  max-width: 300px;
+}
+
+.footer-about h3, .footer-links h3, .footer-social h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.footer-about p {
+  font-size: 14px;
+  color: #bbb;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links ul li {
+  margin: 5px 0;
+}
+
+.footer-links ul li a {
+  text-decoration: none;
+  color: #bbb;
+  font-size: 14px;
+}
+
+.footer-links ul li a:hover {
+  color: white;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.social-icons a {
+  text-decoration: none;
+  color: white;
+  font-size: 24px;
+}
+
+.social-icons a:hover {
+  color: #ff6600; /* Highlight color */
+}
+
+.footer-bottom {
+  margin-top: 10px;
+  font-size: 14px;
+  border-top: 1px solid #444;
+  padding-top: 10px;
+}
